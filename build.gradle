@@ -1,0 +1,91 @@
+defaultTasks 'clean', 'build'
+
+apply plugin: 'java'
+apply plugin: 'maven'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+
+
+defaultTasks 'clean', 'build'
+
+
+group = 'uk.co.xenonique.clients.tesco'
+archivesBaseName = 'tail-file-app'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+idea.module {
+    downloadSources = true
+}
+
+
+dependencies {
+    testCompile "junit:junit:4.12"
+    testCompile 'org.hamcrest:hamcrest-all:1.3'
+    testCompile "org.mockito:mockito-all:1.9.5"
+}
+
+// Override Gradle defaults - a force an exploded JAR view
+sourceSets {
+    main {
+        output.resourcesDir = 'build/classes/main'
+        output.classesDir   = 'build/classes/main'
+    }
+    test {
+        output.resourcesDir = 'build/classes/test'
+        output.classesDir   = 'build/classes/test'
+    }
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.10'
+}
+
+// Java version compatibility to use when compiling Java source 
+sourceCompatibility = '1.8'
+// Java version to generate classes
+targetCompatibility = '1.8'
+
+
+idea {
+
+    module {
+        //if you love browsing Javadoc
+        downloadJavadoc = false
+
+        //and hate reading sources :)
+        downloadSources = true
+    }
+}
+
+task myZip(type: Zip) {
+    description = "Creates a ZIP distribution of the `${archivesBaseName}' project."
+    from '.'
+    def datestamp = new Date().format("yyyyMMdd")
+    def targetName = "peter-pilgrim-${archivesBaseName}-sources-${version}-${datestamp}.zip"
+    archiveName "${targetName}"
+    include '**/src/**'
+    include '**/*.xml'
+    include '**/*.gradle'
+    include '**/*.txt'
+    exclude '**/.gradle/**'
+    exclude '**/.svn/**'
+    exclude '**/build/**'
+    exclude '**/out/**'
+    exclude '**/target/**'
+    /*
+    exclude {
+        details ->
+            details.file.name.equals('.gradle')
+    }
+    */
+
+    doLast {
+        println "**** Creating achive targetName=${targetName} ****"
+    }
+}
+
