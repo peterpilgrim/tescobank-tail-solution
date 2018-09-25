@@ -19,7 +19,10 @@
 
 package uk.co.xenonique.client.tescobank;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicReference;
@@ -32,7 +35,7 @@ import java.util.concurrent.atomic.AtomicReference;
 public class TailFile {
     public String readLast(List<String> lines) {
         AtomicReference<String> lastLine = new AtomicReference<>("");
-        lines.stream().forEach( line -> lastLine.set( line));
+        lines.stream().forEach(line -> lastLine.set(line));
         return lastLine.get();
     }
 
@@ -42,12 +45,11 @@ public class TailFile {
 
         String line = null;
         try {
-            while ( ( line = lineNumberReader.readLine())!= null ) {
+            while ((line = lineNumberReader.readLine()) != null) {
                 lines.add(line);
             }
             return readLast(lines);
-        }
-        catch (IOException ioe) {
+        } catch (IOException ioe) {
             throw new RuntimeException("Unable read input stream", ioe);
         }
     }

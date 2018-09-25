@@ -19,14 +19,14 @@
 
 package uk.co.xenonique.client.tescobank;
 
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
-
-import org.junit.*;
+import org.junit.Test;
 
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
+
+import static org.hamcrest.CoreMatchers.*;
+import static org.junit.Assert.assertThat;
 
 /**
  * A unit test TailFileTest to verify the operation of TailFileTest
@@ -36,13 +36,12 @@ import java.util.List;
 public class TailFileTest {
 
     @Test
-    public void read_last_item_from_input_stream()
-    {
+    public void read_last_item_from_input_stream() {
         InputStream inputStream = this.getClass().getResourceAsStream("/crawl.txt");
         assertThat(inputStream, not(nullValue()));
 
         TailFile tail = new TailFile();
-        assertThat( tail.readLast(inputStream), is("freedom to the galaxy...."));
+        assertThat(tail.readLast(inputStream), is("freedom to the galaxy...."));
     }
 
     @Test

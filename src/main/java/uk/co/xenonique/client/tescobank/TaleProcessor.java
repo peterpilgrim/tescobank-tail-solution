@@ -19,8 +19,10 @@
 
 package uk.co.xenonique.client.tescobank;
 
-import java.io.*;
-import java.util.ArrayList;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -75,13 +77,13 @@ public class TaleProcessor {
         try {
             lineNumberReader = new LineNumberReader(new InputStreamReader(inputStream));
             String line;
-            while ( ( line = lineNumberReader.readLine())!= null ) {
+            while ((line = lineNumberReader.readLine()) != null) {
                 System.out.println(line);
                 process(line);
                 System.out.printf("total=%s\n", total.get());
             }
         } catch (IOException e) {
-            if ( lineNumberReader != null ) {
+            if (lineNumberReader != null) {
                 try {
                     lineNumberReader.close();
                 } catch (IOException e2) {

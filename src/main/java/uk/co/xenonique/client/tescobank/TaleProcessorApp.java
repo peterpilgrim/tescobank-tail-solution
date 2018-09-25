@@ -45,8 +45,7 @@ public class TaleProcessorApp {
                 int count = processor.getWord(word);
                 System.out.printf("[%s] found %d %s.\n", word, count, (count == 1 ? "time" : "times"));
             });
-        }
-        catch (IOException e)    {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
