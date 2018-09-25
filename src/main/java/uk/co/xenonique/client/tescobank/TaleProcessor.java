@@ -78,9 +78,7 @@ public class TaleProcessor {
             lineNumberReader = new LineNumberReader(new InputStreamReader(inputStream));
             String line;
             while ((line = lineNumberReader.readLine()) != null) {
-                System.out.println(line);
                 process(line);
-                System.out.printf("total=%s\n", total.get());
             }
         } catch (IOException e) {
             if (lineNumberReader != null) {

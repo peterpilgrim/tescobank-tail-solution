@@ -73,8 +73,8 @@ public class TaleProcessorTest {
 
         processor.process(inputStream);
         assertThat(processor.getTotal(), is(96));
-        System.out.printf("wordCountMap=%s\n", processor.getWordCountMap());
-        assertThat(processor.getWord("the"), is(27));
+//        System.out.printf("wordCountMap=%s\n", processor.getWordCountMap());
+        assertThat(processor.getWord("the"), is(7));
         assertThat(processor.getWord("a"), is(4));
         assertThat(processor.getWord("an"), is(2));
         assertThat(processor.getWord("of"), is(2));
