@@ -1,6 +1,7 @@
 package uk.co.xenonique.client.tescobank;
 
-import java.io.InputStream;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -18,15 +19,17 @@ public class TaleProcessor {
 
     public void process(String text) {
         String words[] = text.split("\\s+");
-        total.set(words.length);
+        total.set(words.length + total.get());
 
         for (String word : words) {
-            final String insensitiveWord = word.toLowerCase();
-            if (wordCountMap.containsKey(insensitiveWord)) {
-                int count = wordCountMap.get(insensitiveWord);
-                wordCountMap.put(insensitiveWord, count + 1);
-            } else {
-                wordCountMap.put(insensitiveWord, 1);
+            if (word.length() > 0) {
+                final String insensitiveWord = word.toLowerCase();
+                if (wordCountMap.containsKey(insensitiveWord)) {
+                    int count = wordCountMap.get(insensitiveWord);
+                    wordCountMap.put(insensitiveWord, count + 1);
+                } else {
+                    wordCountMap.put(insensitiveWord, 1);
+                }
             }
         }
     }
@@ -49,6 +52,27 @@ public class TaleProcessor {
     }
 
     public void process(InputStream inputStream) {
-        
+        LineNumberReader lineNumberReader = null;
+        try {
+            lineNumberReader = new LineNumberReader(new InputStreamReader(inputStream));
+            String line;
+            while ( ( line = lineNumberReader.readLine())!= null ) {
+                System.out.println(line);
+                process(line);
+                System.out.printf("total=%s\n", total.get());
+            }
+        } catch (IOException e) {
+            if ( lineNumberReader != null ) {
+                try {
+                    lineNumberReader.close();
+                } catch (IOException e2) {
+                    e2.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public SortedMap<String, Integer> getWordCountMap() {
+        return wordCountMap;
     }
 }
