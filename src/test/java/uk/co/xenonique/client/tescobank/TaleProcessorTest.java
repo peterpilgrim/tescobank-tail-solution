@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.*;
 
 import org.junit.*;
 
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 
@@ -42,5 +43,15 @@ public class TaleProcessorTest {
         processor.process(TEXT);
         List<String> words = processor.getOrderedWords();
         assertThat(words, is(Arrays.asList("red", "yellow", "green" )));
+    }
+
+    @Test
+    public void process_words_from_input_stream() {
+        InputStream inputStream = this.getClass().getResourceAsStream("/crawl.txt");
+        assertThat(inputStream, notNullValue());
+        
+        processor.process(inputStream);
+        assertThat(processor.getTotal(), is(100));
+
     }
 }

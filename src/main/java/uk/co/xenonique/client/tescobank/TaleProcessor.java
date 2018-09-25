@@ -1,5 +1,6 @@
 package uk.co.xenonique.client.tescobank;
 
+import java.io.InputStream;
 import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
@@ -45,5 +46,9 @@ public class TaleProcessor {
                 (e1, e2) -> e2.getValue().compareTo(e1.getValue()))
                 .map(element -> element.getKey())
                 .collect(Collectors.toList());
+    }
+
+    public void process(InputStream inputStream) {
+        
     }
 }
